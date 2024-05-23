@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Loading Screen</title>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #f0f0f0;
+            font-family: Arial, sans-serif;
+        }
+        .container {
+            text-align: center;
+            position: relative;
+        }
+        .loading-text {
+            font-size: 2rem;
+            animation: rotate 1.5s linear infinite;
+        }
+        @keyframes rotate {
+            0% { transform: rotateY(0deg); }
+            100% { transform: rotateY(360deg); }
+        }
+        .enter-button {
+            display: none;
+            padding: 10px 20px;
+            font-size: 1.5rem;
+            border: 2px solid #000;
+            cursor: pointer;
+            transition: all 0.5s;
+        }
+        .password-container {
+            display: none;
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            width: 300px;
+            text-align: center;
+        }
+        .password-input {
+            width: 100%;
+            padding: 10px;
+            border: none;
+            border-bottom: 2px solid #000;
+            outline: none;
+            font-size: 1rem;
+        }
+        .note {
+            font-size: 0.7rem;
+            margin-top: 5px;
+        }
+        .waitlist {
+            position: absolute;
+            bottom: 20px;
+            width: 100%;
+            text-align: center;
+            font-size: 1rem;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="loading-text">Nothing.</div>
+        <button class="enter-button" onclick="showPasswordField()">ENTER</button>
+        <div class="password-container">
+            <input type="password" class="password-input" placeholder="Enter password" id="password-input">
+            <div class="note">**DROPS ARE ONLY ACCESSIBLE WITH PASSWORD**</div>
+        </div>
+    </div>
+    <div class="waitlist" onclick="redirectToWaitlist()">Join The waitlist</div>
+
+    <script>
+        const passwordInput = document.querySelector('#password-input');
+
+        setTimeout(() => {
+            document.querySelector('.loading-text').style.display = 'none';
+            document.querySelector('.enter-button').style.display = 'block';
+        }, 1500);
+
+        function showPasswordField() {
+            const button = document.querySelector('.enter-button');
+            const passwordContainer = document.querySelector('.password-container');
+
+            button.style.transform = 'translateX(150px)';
+            button.style.opacity = '0';
+
+            setTimeout(() => {
+                button.style.display = 'none';
+                passwordContainer.style.display = 'block';
+            }, 500);
+        }
+
+        function redirectToWaitlist() {
+            window.location.href = "/html/waitlist_form.html";
+        }
+
+        passwordInput.addEventListener('keydown', (event) => {
+            if (event.key === 'Enter') {
+                verifyPassword(passwordInput.value);
+            }
+        });
+
+        function verifyPassword(password) {
+            fetch('http://localhost:3000/verify-password', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ password })
+            })
+            .then(response => {
+                if (response.ok) {
+                    window.location.href = '/html/dashboard.html';
+                } else {
+                    alert('Contraseña incorrecta. Inténtalo de nuevo.');
+                }
+            })
+            .catch(() => {
+                alert('Error al verificar la contraseña. Inténtalo de nuevo.');
+            });
+        }
+    </script>
+</body>
+</html>

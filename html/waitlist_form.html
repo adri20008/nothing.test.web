@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Waitlist Form</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+            padding: 40px;
+            width: 400px;
+            transition: box-shadow 0.3s;
+        }
+
+        .container:hover {
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
+        }
+
+        h2 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 20px;
+            opacity: 0;
+            transform: translateY(-20px);
+            transition: opacity 0.3s, transform 0.3s;
+        }
+
+        .container:hover h2 {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        label {
+            display: block;
+            margin-bottom: 10px;
+            color: #555;
+            opacity: 0;
+            transform: translateY(-20px);
+            transition: opacity 0.3s, transform 0.3s;
+        }
+
+        .container:hover label {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="tel"],
+        input[type="submit"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+            opacity: 0;
+            transform: translateY(-20px);
+            transition: opacity 0.3s, transform 0.3s;
+        }
+
+        .container:hover input[type="text"],
+        .container:hover input[type="email"],
+        .container:hover input[type="tel"],
+        .container:hover input[type="submit"] {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        input[type="submit"] {
+            background-color: #fff;
+            border: none;
+            color: #000;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s;
+            opacity: 0;
+            transform: translateY(-20px);
+            transition: opacity 0.3s, transform 0.3s;
+        }
+
+        .container:hover input[type="submit"] {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        input[type="submit"]:hover {
+            background-color: #f4f4f4;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Join the Waitlist</h2>
+        <form action="/php/process_form.php" method="post">
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" required>
+
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required>
+
+            <label for="phone">Phone:</label>
+            <input type="tel" id="phone" name="phone" required>
+
+            <label for="country">Country:</label>
+            <input type="text" id="country" name="country" required>
+
+            <input type="submit" value="Join">
+        </form>
+    </div>
+</body>
+</html>
